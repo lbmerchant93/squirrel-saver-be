@@ -1,32 +1,35 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id                    String      @id @db.Uuid @default(dbgenerated("gen_random_uuid()"))
+generator client {
+  provider = "prisma-client-js"
+  output  = "../src/generated/prisma-client"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../src/generated/type-graphql"
+}
+
+model User {
+  id                    String      @id
   displayName           String?
   email                 String
-  periods               period[]
+  periods               Period[]
   createdAt             DateTime    @default(now())
   updatedAt             DateTime    @updatedAt
 }
 
-model period {
-  id                    String      @id @default(dbgenerated("gen_random_uuid()"))
+model Period {
+  id                    Int         @id @default(autoincrement())
   totalSavings          Int         @default(0)
   savingsRange          Int[]       @default([1, 100])
   numbersDrawn          Int[]       @default([])
   numbersNotDrawn       Int[]       @default([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100])
-  owner                 user        @relation(fields: [ownerId], references: [id])
-  ownerId               String      @db.Uuid
+  ownerId               String      
+  owner                 User        @relation(fields: [ownerId], references: [id])
   createdAt             DateTime    @default(now())
   updatedAt             DateTime    @updatedAt
 }

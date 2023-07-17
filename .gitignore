@@ -1,3 +1,6 @@
 node_modules
-# Keep environment variables out of version control
+src/generated/type-graphql
+src/generated/prisma-client
+src/generated-schema.graphql
 .env
+*.env
