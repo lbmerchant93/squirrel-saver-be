@@ -6,6 +6,7 @@ import {
   UserCrudResolver,
   relationResolvers
 } from "./generated/type-graphql";
+import { UserOverrideResolver } from "./views/graphql/userResolvers";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import cors from "cors";
@@ -25,6 +26,7 @@ async function main() {
     resolvers: [
       PeriodCrudResolver,
       UserCrudResolver,
+      UserOverrideResolver,
       ...relationResolvers
     ],
     validate: false,
